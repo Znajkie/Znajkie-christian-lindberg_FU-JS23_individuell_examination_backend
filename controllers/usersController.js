@@ -58,9 +58,6 @@ async function postLogin(req, res) {
       expiresIn: '1h',
     });
 
-    // Log the JWT token
-    console.log('JWT Token:', token);
-
     // Send the token back in the response
     res.status(200).json({ success: true, token });
   } catch (error) {

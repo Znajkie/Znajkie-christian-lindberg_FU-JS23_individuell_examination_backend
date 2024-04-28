@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 // TOKEN VERIFYER
-function tokenVerify(req, res, next) {
+function auth(req, res, next) {
   // Check if Authorization header exists
   const authHeader = req.headers['authorization'];
   if (!authHeader) {
@@ -15,17 +15,17 @@ function tokenVerify(req, res, next) {
   }
 
   // Verify the token
-  jwt.verify(token, process.env.JWT_SECRET_KEY, { expiresIn: '1h' }, (err, decoded) => {
+  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
     if (err) {
       return res.status(401).json({ error: 'Invalid token' });
     }
 
     // Token is valid, attach userId to the request object
     req.userId = decoded.userId;
-    next(); // Call next middleware
+    next();
   });
 }
 
 module.exports = {
-  tokenVerify
+  auth
 };

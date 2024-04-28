@@ -8,6 +8,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
 const notesRoutes = require('./routes/notesRoutes')
 const userRoutes = require('./routes/userRoutes')
+const { auth } = require('./utils/utils');
 
 app.use(express.json());
 app.use(cors());
@@ -45,7 +46,7 @@ swaggerSpec.components = {
 };
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use('/api/notes', notesRoutes);
+app.use('/api/notes', auth, notesRoutes);
 app.use('/api/user', userRoutes);
 
 app.listen(PORT, URL, () => {

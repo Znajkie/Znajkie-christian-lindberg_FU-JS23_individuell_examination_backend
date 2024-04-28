@@ -4,13 +4,6 @@ const usersController = require('../controllers/usersController');
 
 /**
  * @swagger
- * tags:
- *   name: Users
- *   description: User management endpoints
- */
-
-/**
- * @swagger
  * /api/user/signup:
  *   post:
  *     summary: Register a new user

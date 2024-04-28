@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const notesController = require('../controllers/notesController');
-const { tokenVerify } = require('../utils/utils');
+
 
 /**
  * @swagger
@@ -49,7 +49,7 @@ const { tokenVerify } = require('../utils/utils');
  *     produces:
  *       - application/json
  */
-router.post('/', tokenVerify, notesController.postNote);
+router.post('/', notesController.postNote);
 /**
  * @swagger
  * /api/notes:
@@ -80,7 +80,7 @@ router.post('/', tokenVerify, notesController.postNote);
  */
 
 
-router.get('/', tokenVerify, notesController.getAllNotes);
+router.get('/', notesController.getAllNotes);
 
 /**
  * @swagger
@@ -135,7 +135,7 @@ router.get('/', tokenVerify, notesController.getAllNotes);
  */
 
 
-router.put('/:id', tokenVerify, notesController.putNote);
+router.put('/:id', notesController.putNote);
 
 /**
  * @swagger
@@ -175,7 +175,7 @@ router.put('/:id', tokenVerify, notesController.putNote);
  *       '500':
  *         description: Internal Server Error
  */
-router.delete('/:id', tokenVerify, notesController.deleteNote);
+router.delete('/:id', notesController.deleteNote);
 
 /**
  * @swagger
@@ -212,6 +212,6 @@ router.delete('/:id', tokenVerify, notesController.deleteNote);
  *       '500':
  *         description: Internal Server Error
  */
-router.get('/search', tokenVerify, notesController.searchNote);
+router.get('/search', notesController.searchNote);
 
 module.exports = router;
