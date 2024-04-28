@@ -1,15 +1,4 @@
-const moment = require('moment');
 const jwt = require('jsonwebtoken');
-
-// created time for POST
-function getCreatedAt() {
-  return moment();
-}
-
-// Modified time for PUT
-function getModifiedAt() {
-  return moment();
-}
 
 // TOKEN VERIFYER
 function tokenVerify(req, res, next) {
@@ -38,7 +27,5 @@ function tokenVerify(req, res, next) {
 }
 
 module.exports = {
-  tokenVerify,
-  getModifiedAt,
-  getCreatedAt,
+  tokenVerify
 };

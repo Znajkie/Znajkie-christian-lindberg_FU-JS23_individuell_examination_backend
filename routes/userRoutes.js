@@ -36,6 +36,8 @@ const usersController = require('../controllers/usersController');
  *       500:
  *         description: Internal server error
  */
+// POST SIGNUP
+router.post('/signup', usersController.postSignUp);
 
 /**
  * @swagger
@@ -89,11 +91,8 @@ const usersController = require('../controllers/usersController');
  *                 error:
  *                   type: string
  */
-// POST SIGNUP
-router.post('/signup', usersController.postSignUp);
-
 // POST Login
 router.post('/login', usersController.postLogin);
 
-//Exportera routers
+
 module.exports = router;
