@@ -2,23 +2,22 @@ const moment = require('moment');
 const Note = require('../models/Note');
 const notesDb = require('../models/notesModel');
 
+
+// POST request 
 const postNote = (req, res) => {
-  const userId = req.userId;
-  console.log(userId); // undefined
-  const { id, title, text } = req.body;
+    const userId = req.userId;
+    const { id, title, text } = req.body;
+    const createdAt = moment().toDate();
+    const modifiedAt = createdAt;
+    const newNote = new Note(userId, id, title, text, createdAt, modifiedAt);
 
-  const createdAt = moment().toDate();
-  const modifiedAt = createdAt;
-
-  const newNote = new Note(userId, id, title, text, createdAt, modifiedAt);
-
-  notesDb.insert(newNote, (err, insertedNote) => {
-    if (err) {
-      res.status(500).json({ error: 'Error creating note' });
-    } else {
-      res.status(201).json(insertedNote);
-    }
-  });
+    notesDb.insert(newNote, (err, insertedNote) => {
+      if (err) {
+        res.status(500).json({ error: 'Error creating note' });
+      } else {
+        res.status(201).json(insertedNote);
+      }
+    });
 };
 
 // PUT request
@@ -43,25 +42,20 @@ const putNote = (req, res) => {
   );
 };
 
-// GET request
-const getNote = (req, res) => {
-  const userId = req.userId; // Access userId from the request object
-
-  // Fetch notes for the logged-in user
-  notesDb.find({ userId: userId }, (err, notes) => {
-    if (err) {
-      res.status(500).json({ error: 'Error fetching notes' });
-    } else {
-      res.json(notes);
-    }
-  });
+// GET all notes in the DB
+const getAllNotes = async (req, res) => {
+  try {
+    const docs = await notesDb.find({});
+    res.status(200).json({ success: true, menu: docs });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err });
+  }
 };
 
 // DELETE request
 const deleteNote = (req, res) => {
   const noteId = req.params.id;
 
-  // Delete the note from the database
   notesDb.remove({ _id: noteId }, {}, (err, numRemoved) => {
     if (err) {
       console.error('Error deleting note:', err);
@@ -75,29 +69,26 @@ const deleteNote = (req, res) => {
     }
   });
 };
-const searchNotes = (req, res) => {
-  const searchTerm = req.query.q;
-  notesDb.find(
-    {
-      $or: [
-        { title: new RegExp(searchTerm, 'i') },
-        { text: new RegExp(searchTerm, 'i') },
-      ],
-    },
-    (err, foundNotes) => {
-      if (err) {
-        res.status(500).json({ error: 'Error searching notes' });
-      } else {
-        res.json(foundNotes);
-      }
-    }
-  );
+
+// GET Search for a note with the title
+const searchNote = async (req, res) => {
+  try {
+    const searchTerm = req.query.q;
+    const foundNotes = await notesDb.find({
+      title: new RegExp(searchTerm, 'i'),
+    });
+    res.status(200).json(foundNotes);
+  } catch (error) {
+    console.error('Error searching notes:', error);
+    res.status(500).json({ error: 'Error searching notes' });
+  }
 };
+
 
 module.exports = {
   postNote,
   putNote,
-  getNote,
+  getAllNotes,
   deleteNote,
-  searchNotes,
+  searchNote,
 };

@@ -4,11 +4,11 @@
 
 ## Overview
 
-Jag har skapat Routes och Api för Notes i Node.js med neDB.
+Routes och Api för Notes och user i Node.js med neDB, express, cors mfl.
 
 ## Team Members
 
-Team : Christian Lindberg
+Team : Christian
 
 ## Table of Contents
 
@@ -24,6 +24,9 @@ christian-lindberg_FU-JS23-indviduell_examination_backend/
 ├── controllers/
 │   ├── notesController.js
 │   └── usersController.js
+├── database/
+│   ├── notes.db
+│   └── users.db
 ├── models/
 │   ├── Note.js
 │   ├── notesModel.js
@@ -31,9 +34,6 @@ christian-lindberg_FU-JS23-indviduell_examination_backend/
 ├── routes/
 │   ├── notesRoutes.js
 │   └── userRoutes.js
-├── database/
-│   ├── notes.db
-│   └── users.db
 ├── util/
 │   └── utils.js
 └── menu.json

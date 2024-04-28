@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 
-//Funktion för signup
+// Function for signup
 async function postSignUp(req, res) {
   const { username, password } = req.body;
   const usernameExists = await usersDb.findOne({ username: username });
@@ -32,6 +32,7 @@ async function postSignUp(req, res) {
   }
 }
 
+// Function for login
 async function postLogin(req, res) {
   const { username, password } = req.body;
 
@@ -53,44 +54,22 @@ async function postLogin(req, res) {
 
     // Generate JWT token
     const userId = user.userId;
-    const token = jwt.sign({ userId }, process.env.JWT_SECRET_KEY);
+    const token = jwt.sign({ userId }, process.env.JWT_SECRET_KEY, {
+      expiresIn: '1h',
+    });
 
     // Log the JWT token
     console.log('JWT Token:', token);
 
-    res
-      .header('Authorization', token)
-      .status(200)
-      .json({ success: true, token });
-
+    // Send the token back in the response
+    res.status(200).json({ success: true, token });
   } catch (error) {
     console.error('Error during login:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 }
 
-function verifyToken(req, res, next) {
-  const token = req.headers['authorization'];
-  if (!token) {
-
-    return res
-      .status(401)
-      .json({ success: false, message: 'Unauthorized: Missing token' });
-  }
-  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
-    if (err) {
-      return res
-        .status(401)
-        .json({ success: false, message: 'Unauthorized: Invalid token' });
-    }
-    req.userId = decoded.userId;
-
-    next();
-  });
-}
-
 module.exports = {
   postSignUp,
   postLogin,
-  verifyToken,
 };
