@@ -17,8 +17,14 @@ const swaggerDefinition = {
           id: { type: 'string' },
           title: { type: 'string' },
           text: { type: 'string' },
-          createdAt: { type: 'string', format: 'date-time' },
-          modifiedAt: { type: 'string', format: 'date-time' },
+          createdAt: {
+            type: 'string',
+            pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}$',
+          },
+          modifiedAt: {
+            type: 'string',
+            pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}$',
+          },
         },
       },
     },
