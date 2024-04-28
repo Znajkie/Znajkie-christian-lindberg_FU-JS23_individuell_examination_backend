@@ -2,14 +2,12 @@ const express = require('express');
 const router = express.Router();
 const notesController = require('../controllers/notesController');
 
-
 /**
  * @swagger
  * tags:
  *   name: Notes
  *   description: API endpoints for managing notes
  */
-
 /**
  * @swagger
  * /api/notes:
@@ -50,6 +48,7 @@ const notesController = require('../controllers/notesController');
  *       - application/json
  */
 router.post('/', notesController.postNote);
+
 /**
  * @swagger
  * /api/notes:
@@ -78,8 +77,6 @@ router.post('/', notesController.postNote);
  *       '500':
  *         description: Internal Server Error
  */
-
-
 router.get('/', notesController.getAllNotes);
 
 /**
@@ -95,7 +92,7 @@ router.get('/', notesController.getAllNotes);
  *         required: true
  *         schema:
  *           type: string
- *         description: The ID of the note to update, use BU4aNEHAhMV5z0Ff for example
+ *         description: The ID of the note to update, use LtWUqGaQxAZQeBbB for example
  *       - in: body
  *         name: note
  *         description: The updated note information
@@ -133,8 +130,6 @@ router.get('/', notesController.getAllNotes);
  *       '500':
  *         description: Internal Server Error
  */
-
-
 router.put('/:id', notesController.putNote);
 
 /**
@@ -150,7 +145,7 @@ router.put('/:id', notesController.putNote);
  *         required: true
  *         schema:
  *           type: string
- *         description: The ID of the note to delete, use Wr6PNbdFQlfvQCax for example
+ *         description: The ID of the note to delete, use LtWUqGaQxAZQeBbB for example
  *       - in: header
  *         name: Authorization
  *         description: Bearer token for authentication (e.g. "Bearer YOUR_JWT_TOKEN")
@@ -181,8 +176,8 @@ router.delete('/:id', notesController.deleteNote);
  * @swagger
  * /api/notes/search:
  *   get:
- *     summary: Search for note
- *     description: Search for note based on title, use chrille for example
+ *     summary: Search for a note
+ *     description: Search for note based on title, use title final for example
  *     tags: [Notes]
  *     parameters:
  *       - in: query
